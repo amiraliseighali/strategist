@@ -1,0 +1,6 @@
+<h1>Strategy#index</h1>
+<p>Find me in app/views/strategy/index.html.erb</p>
+<%= form_with :url => { :action => "calculate" }, method: :post do %>
+ <%= text_field_tag :name, nil %>
+ <%= submit_tag 'Send' %>
+<% end %>
