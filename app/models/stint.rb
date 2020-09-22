@@ -23,6 +23,9 @@ class Stint
         end
         return pit_laps 
     end
+    def tyre
+        return @tyre
+    end 
     def laps
         case @tyre
         when "ss"

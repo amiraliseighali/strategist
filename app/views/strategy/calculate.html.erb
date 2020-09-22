@@ -13,14 +13,30 @@
 <tbody>
     <tr>
         <td>
-            <%= @strategy.pitlap %>
+            <%= @strategy.best_strategy.pit_laps%>
         </td>
     </tr>
     <tr>
         <td>
-            <%= @strategy.best_strategy %>
+            <% @strategy.best_strategy.stints.each do |stint| %>
+                <%= stint.tyre %>
+            <%end %>
         </td>
     </tr>
+    <tr>
+        <td>
+        
+            <% @strategy.all_strategies.each do |race| %>
+            <%= race.total_time%>
+            <%= race.pit_laps%>
+                <% race.stints.each do |stint| %>
+                <%= stint.tyre %>
+            <%end %>
+            <p>next</p>
+            <%end %>
+        </td>
+    </tr>
+
     
 </tbody>
 </table>

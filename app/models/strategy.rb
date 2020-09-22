@@ -57,18 +57,18 @@ class Strategy
         end
         return result
     end
-    end
+    
     def best_strategy
         best_race = all_strategies[0]
         all_strategies.each do |n|
-            if best_race.duration < n.duration
+            if best_race.total_time > n.total_time
                 best_race = n
             end
         end
         return best_race
     end
 
-
+end 
 #pitlap to use calculation
 #form to send the data from view to calculate
 #use avg time in secs in calculation

@@ -7,6 +7,7 @@ class Race
     def initialize (track:)
         @track = track
         @stints = []
+        @pit_laps = []
     end
 
     def laps_left
@@ -17,14 +18,27 @@ class Race
                 total_laps = total_laps - n.laps
             end
         else
-            total_laps
+            return total_laps
         end 
         return total_laps
     end
 
-
+    
     def add(stint)
         @stints.push(stint)
+        if @pit_laps.length > 0
+            pit_lap = @pit_laps[-1]+ stint.laps.floor
+        else
+            pit_lap = stint.laps.floor
+        end
+        @pit_laps.push(pit_lap)
+    end
+    
+    def pit_laps
+        return @pit_laps
+    end
+    def stints
+        return @stints
     end
     def total_time
         result = 0
