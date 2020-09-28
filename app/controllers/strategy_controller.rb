@@ -9,9 +9,12 @@ class StrategyController < ApplicationController
     
     track = "Monaco"
     @track = Track.new(track_name: track)
-    @stints = [Stint.new(track: @track, tyre:@track.tyres[0], pit_time: pit_time, average_time_in_seconds: average_time_in_seconds), 
-               Stint.new(track: @track, tyre:@track.tyres[1], pit_time: pit_time, average_time_in_seconds: average_time_in_seconds), 
-               Stint.new(track: @track, tyre:@track.tyres[2], pit_time: pit_time, average_time_in_seconds: average_time_in_seconds)]
-    @strategy = Strategy.new(average_time_in_seconds: average_time_in_seconds,  track: @track, stints:@stints)
+
+    @stints = @track.tyres.map do |tyre|
+        Stint.new(track: @track, tyre: tyre, pit_time: pit_time, average_time_in_seconds: average_time_in_seconds)
+    end
+
+    @strategy = Strategy.new(average_time_in_seconds: average_time_in_seconds,  track: @track, stints: @stints)
+    
   end
 end

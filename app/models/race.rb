@@ -11,20 +11,24 @@ class Race
     end
 
     def laps_left
-        total_laps = @track.total_laps
-        if @stints.length > 0
-            # for i in 0..(@stints.length -1)
-            @stints.each do |n|
-                total_laps = total_laps - n.laps
-            end
-        else
-            return total_laps
-        end 
-        return total_laps
+        # total_laps = @track.total_laps
+        # if @stints.length > 0
+        #     # for i in 0..(@stints.length -1)
+        #     @stints.each do |n|
+        #         total_laps = total_laps - n.laps
+        #     end
+        # else
+        #     return total_laps
+        # end 
+        # return total_laps
+
+        @track.total_laps - stints.sum(&:laps)
     end
 
     
     def add(stint)
+#needs to check if the stint is going over the track.total_lap and cut it there
+        
         @stints.push(stint)
         if @pit_laps.length > 0
             pit_lap = @pit_laps[-1]+ stint.laps.floor
@@ -32,6 +36,7 @@ class Race
             pit_lap = stint.laps.floor
         end
         @pit_laps.push(pit_lap)
+        
     end
     
     def pit_laps
@@ -48,4 +53,7 @@ class Race
         return result
     end
 
+    def unfinished?
+        laps_left > 0
+    end
 end

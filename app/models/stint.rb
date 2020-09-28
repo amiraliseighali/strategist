@@ -8,45 +8,43 @@ class Stint
         @pit_time = pit_time
         @average_time_in_seconds = average_time_in_seconds
     end
-    
-    def pitlap
-        pit_laps = Array.new
-        for i in 0..@number_of_laps
-            if i == 0
-                tyre = 1    
-            end
-            tyre = tyre - wear_per_lap
-            if tyre < wear_per_lap
-                pit_laps.push(i+1)
-                tyre = 1
-            end
-        end
-        return pit_laps 
-    end
-    def tyre
-        return @tyre
-    end 
+
     def laps
-        case @tyre
+        case tyre
         when "ss"
-          return (25/@track.lap_distance) 
+          (25 / track.lap_distance).floor
         when "s"
-          return (50/@track.lap_distance) 
+          (50 / track.lap_distance).floor
         when "m"
-            return (100/@track.lap_distance) 
+          (100 / track.lap_distance).floor
         end
     end
 
     def duration
-        case @tyre
-        when "ss"
-          return @average_time_in_seconds + @pit_time + @track.pit_lane_duration
-        when "s"
-          return @average_time_in_seconds + @pit_time + @track.pit_lane_duration + 0.4
-        when "m"
-            return @average_time_in_seconds + @pit_time + @track.pit_lane_duration + 0.8 + 0.4
-        end
+        on_track_duration + pit_duration
     end 
 
+    def on_track_duration
+        laps * (average_time_in_seconds + tire_pace_difference)
+    end
 
+    def tire_pace_difference
+      case tyre
+      when "ss"
+        0
+      when "s"
+        0.4
+      when "m"
+        1.2
+      end
+    end
+
+    def pit_duration
+      pit_time + track.pit_lane_duration
+    end
+
+    attr_reader :tyre
+    attr_reader :track
+    attr_reader :pit_time
+    attr_reader :average_time_in_seconds
 end
